@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -43,6 +44,7 @@ import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -58,12 +60,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             TMDBTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier
-                        .padding(15.dp)
-                        .background(color = Color.DarkGray)
-                ) {
-                    Greeting()
+                Surface(Modifier.background(color = Color.DarkGray).padding(15.dp)) {
+                        Greeting()
                 }
             }
         }
@@ -78,21 +76,20 @@ fun Greeting() {
     viewModel.getPopularMovies()
 
     val uiState by viewModel.uiState.collectAsState()
-    LazyColumn {
+    LazyColumn (Modifier.background(color = Color.DarkGray)){
         items(uiState.popularMovies.orEmpty()) { medias ->
 
-                Column {
-                    Box(
-                        modifier = Modifier
-                            .background(color = Color.Cyan)
-                            .clip(shape = RoundedCornerShape(15.dp))
-                            .fillMaxWidth()
-                            .padding(20.dp)
-                    )
-                    {
+            Column (Modifier.clip(RoundedCornerShape(25.dp))){
+                Box(
+                    modifier = Modifier
+                        .background(color = Color.Cyan)
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                )
+                {
                     Row(modifier = Modifier.fillMaxWidth(), Arrangement.SpaceBetween) {
                         AsyncImage(
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwg2PWrY_5mkISXy_GqXWUYPbglvpL6FSUgg&usqp=CAU",
+                            "https://image.tmdb.org/t/p/w500${medias.poster_path}",
                             contentDescription = null
                         )
                         Spacer(modifier = Modifier.width(50.dp))
@@ -102,15 +99,16 @@ fun Greeting() {
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Bold
                             )
+                            Text(text = medias.vote_average.toString())
+                            Text(text = medias.vote_count.toString())
                         }
                     }
                 }
-                    Spacer(modifier = Modifier.height(20.dp))
-            }
 
+            }
+            Spacer(modifier = Modifier.height(20.dp))
         }
     }
-
 }
 
 

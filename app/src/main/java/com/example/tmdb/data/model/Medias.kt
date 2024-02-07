@@ -3,11 +3,11 @@ package com.example.tmdb.data.model
 data class Medias(
     val overview: String,
     val popularity: Double,
-    val poster_patch: String,
-    val releaseDate: String,
+    val poster_path: String,
+    val release_date: String,
     val title: String,
-    val voteAverage: Double,
-    val voteCount: Int,
+    val vote_average: Double,
+    val vote_count: Int,
 )
 
 data class X(
