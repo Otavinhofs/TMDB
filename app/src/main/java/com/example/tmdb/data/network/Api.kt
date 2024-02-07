@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
 
 interface Api {
 
-    @GET("movie/popular")
+    @GET("movie/popular?language=pt-BR")
     suspend fun getMoviesList(
         @Header("Authorization") header: String
     ) : Response<ApiResponseWrapper<List<Medias>>>
