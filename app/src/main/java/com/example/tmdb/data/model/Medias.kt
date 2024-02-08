@@ -1,10 +1,12 @@
 package com.example.tmdb.data.model
 
+import java.util.Date
+
 data class Medias(
     val overview: String,
     val popularity: Double,
     val poster_path: String,
-    val release_date: String,
+    val release_date: Date,
     val title: String,
     val vote_average: Double,
     val vote_count: Int,
