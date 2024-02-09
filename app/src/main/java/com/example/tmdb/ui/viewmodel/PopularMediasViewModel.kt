@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.update
 
-class PopularMovieViewModel : ViewModel() {
+class PopularMediasViewModel : ViewModel() {
 
     val uiState = MutableStateFlow(PopularMovieState())
 
@@ -20,8 +20,15 @@ class PopularMovieViewModel : ViewModel() {
 
     fun getPopularMovies() {
         viewModelScope.launch {
-            val response = repository.getPopularMedias()
-            uiState.update { it.copy(popularMovies = response)} // pode pegar e ajeitar o Greeting la com esse ajuste que eu fiz blz
+            val response = repository.getPopularMovies()
+            uiState.update { it.copy(trendingMedias = response)}
+        }
+    }
+
+    fun getPopularSeries() {
+        viewModelScope.launch {
+            val response = repository.getPopularSeries()
+            uiState.update { it.copy(trendingMedias = response, loading = false)}
         }
     }
 
@@ -29,7 +36,7 @@ class PopularMovieViewModel : ViewModel() {
         val loading: Boolean = false,
         val error: String? = null,
         val isEmpty: Boolean = false,
-        val popularMovies: List<Medias>? = null
+        val trendingMedias: List<Medias>? = null
     )
 }
 

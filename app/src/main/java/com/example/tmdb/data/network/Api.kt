@@ -17,8 +17,13 @@ import java.util.concurrent.TimeUnit
 
 interface Api {
 
-    @GET("movie/popular?language=pt-BR")
+    @GET("movie/day?language=pt-BR")
     suspend fun getMoviesList(
+        @Header("Authorization") header: String
+    ) : Response<ApiResponseWrapper<List<Medias>>>
+
+    @GET("tv/day?language=pt-BR")
+    suspend fun getSeriesList(
         @Header("Authorization") header: String
     ) : Response<ApiResponseWrapper<List<Medias>>>
 }
@@ -36,7 +41,7 @@ fun <T> getApi(serviceClass: Class<T>): T {
         .create()
 
     val retrofit = Retrofit.Builder()
-        .baseUrl("https://api.themoviedb.org/3/")
+        .baseUrl("https://api.themoviedb.org/3/trending/")
         .client(client.build())
         .addConverterFactory(GsonConverterFactory.create(gson))
 
