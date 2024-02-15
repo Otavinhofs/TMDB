@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.update
 
 class PopularMediasViewModel : ViewModel() {
 
-    val uiState = MutableStateFlow(PopularMovieState())
+    val uiState = MutableStateFlow(PopularMediasState())
 
     // sim, eu fiz pra testar, o correto nesse caso seria assim: blz é assim que chamo os estados
     // sim, eu tinha criado a variavel com popularMovies so blz
     
-    private val repository: MediasRepository by lazy { 
-        MediasRepository()
+    private val repository: TrendingRepository by lazy {
+        TrendingRepository()
     }
 
     fun getPopularMovies() {
@@ -32,13 +32,10 @@ class PopularMediasViewModel : ViewModel() {
         }
     }
 
-    data class PopularMovieState(
+    data class PopularMediasState(
         val loading: Boolean = false,
         val error: String? = null,
         val isEmpty: Boolean = false,
         val trendingMedias: List<Medias>? = null
     )
 }
-
-// a gente cirou esse popularMovies view model e tamo usando aquele Greeting la ne ss
-// Tu ia criar tipo... cara bom

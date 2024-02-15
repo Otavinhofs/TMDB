@@ -27,10 +27,13 @@ fun BottomNavGraph(navController: NavHostController) {
         startDestination = BottomBarScreen.Movie.route
     ) {
         composable(route = BottomBarScreen.Movie.route) {
-            MediasCard(mediaType = MediaType.MOVIE)
+            MediasScreen(mediaType = MediaType.MOVIE)
         }
         composable(route = BottomBarScreen.Serie.route) {
-            MediasCard(mediaType = MediaType.SERIE)
+            MediasScreen(mediaType = MediaType.SERIE)
+        }
+        composable(route = BottomBarScreen.Person.route) {
+            PersonScreen()
         }
     }
 }

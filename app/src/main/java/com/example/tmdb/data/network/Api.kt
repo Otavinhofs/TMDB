@@ -1,6 +1,7 @@
 package com.example.tmdb.data.network
 
 import com.example.tmdb.data.model.Medias
+import com.example.tmdb.data.model.Person
 import com.example.tmdb.data.network.wrapper.ApiResponseWrapper
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -26,6 +27,10 @@ interface Api {
     suspend fun getSeriesList(
         @Header("Authorization") header: String
     ) : Response<ApiResponseWrapper<List<Medias>>>
+    @GET("person/day?language=pt-BR")
+    suspend fun getPersonList(
+        @Header("Authorization") header: String
+    ) : Response<ApiResponseWrapper<List<Person>>>
 }
 
 private const val TIMEOUT: Long = 60
