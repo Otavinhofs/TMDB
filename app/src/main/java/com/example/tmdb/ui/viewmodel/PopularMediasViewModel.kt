@@ -21,19 +21,19 @@ class PopularMediasViewModel : ViewModel() {
     fun getPopularMovies() {
         viewModelScope.launch {
             val response = repository.getPopularMovies()
-            uiState.update { it.copy(trendingMedias = response)}
+            uiState.update { it.copy(trendingMedias = response, isloading = false)}
         }
     }
 
     fun getPopularSeries() {
         viewModelScope.launch {
             val response = repository.getPopularSeries()
-            uiState.update { it.copy(trendingMedias = response, loading = false)}
+            uiState.update { it.copy(trendingMedias = response, isloading = false)}
         }
     }
 
     data class PopularMediasState(
-        val loading: Boolean = false,
+        val isloading: Boolean = false,
         val error: String? = null,
         val isEmpty: Boolean = false,
         val trendingMedias: List<Medias>? = null

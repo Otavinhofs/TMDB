@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Stars
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -59,6 +60,7 @@ fun MediasScreen(mediaType: MediaType) {
         }
     }
 }
+
 
 @Composable
 fun MediasCard(medias: Medias) {

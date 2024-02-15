@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -46,10 +47,14 @@ fun BottomBar(navController: NavHostController) {
         BottomBarScreen.Person
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
+    val currentDestination = navBackStackEntry?.destination?.route
     NavigationBar {
-        screens.forEach { screens ->
-            AddItem(screen = screens, currentDestination = currentDestination, navController = navController)
+        screens.forEach { screen ->
+            AddItem(
+                screen = screen,
+                currentDestination = currentDestination,
+                navController = navController
+            )
         }
     }
 }
@@ -57,15 +62,16 @@ fun BottomBar(navController: NavHostController) {
 @Composable
 fun RowScope.AddItem(
     screen: BottomBarScreen,
-    currentDestination: NavDestination?,
+    currentDestination: String?,
     navController: NavHostController
 ) {
     NavigationBarItem(
-        selected = currentDestination?.hierarchy?.any {
-            it.route == screen.route
-        } == true,
+        selected = currentDestination == screen.route ,
         onClick = {
-            navController.navigate(screen.route)
+            navController.navigate(screen.route) {
+                popUpTo(navController.graph.findStartDestination().id)
+                launchSingleTop = true
+            }
         },
         label = {
             Text(text = screen.title)

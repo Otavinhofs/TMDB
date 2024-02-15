@@ -59,7 +59,6 @@ class MainActivity : ComponentActivity() {
 
                 val navController = rememberNavController()
 
-                BottomNavGraph(navController = navController)
 
                 // A surface container using the 'background' color from the theme
                 Surface(
