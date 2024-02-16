@@ -44,21 +44,31 @@ fun MediasScreen(mediaType: MediaType) {
     val viewModel = PopularMediasViewModel()
     if (mediaType == MediaType.MOVIE) {
         viewModel.getPopularMovies()
-    } else {
+    }
+    else {
         viewModel.getPopularSeries()
     }
     val uiState by viewModel.uiState.collectAsState()
 
-    LazyColumn(
-        Modifier
-            .background(color = Color.LightGray)
-            .padding(15.dp)
-            .fillMaxSize()
-    ) {
-        items(uiState.trendingMedias.orEmpty()) { medias ->
-            MediasCard(medias)
+//    if (uiState.loading) {
+//        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+//            CircularProgressIndicator()
+//        }
+//        print("__________loading True__________")
+//    } else {
+        print("++++++++++loading false________")
+        LazyColumn(
+            Modifier
+                .background(color = Color.LightGray)
+                .padding(15.dp)
+                .fillMaxSize()
+        ) {
+            items(uiState.trendingMedias.orEmpty()) { medias ->
+                MediasCard(medias)
+            }
         }
-    }
+//    }
+
 }
 
 

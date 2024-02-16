@@ -4,19 +4,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tmdb.data.model.Person
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class PopularPersonViewModel : ViewModel() {
-    val uiState = MutableStateFlow(PopularPersonState())
+    private val _state = MutableStateFlow(PopularPersonState())
+    val uiState = _state.asStateFlow()
     private val repository: TrendingRepository by lazy {
         TrendingRepository()
     }
 
     fun getPopularPerson() {
+        _state.update { it.copy(loading = true) }
         viewModelScope.launch {
             val response = repository.getPopularPerson()
-            uiState.update { it.copy(trendingPersons = response)}
+            _state.update { it.copy(trendingPersons = response, loading = false)}
         }
     }
 }

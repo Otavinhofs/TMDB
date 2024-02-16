@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.outlined.LiveTv
 import androidx.compose.material.icons.outlined.Movie
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -24,11 +26,13 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -44,8 +48,8 @@ import com.example.tmdb.ui.components.BottomBar
 import com.example.tmdb.ui.components.BottomNavGraph
 import com.example.tmdb.ui.components.MediasCard
 import com.example.tmdb.ui.theme.TMDBTheme
+import com.example.tmdb.ui.viewmodel.PopularMediasViewModel
 import okhttp3.Route
-
 
 
 class MainActivity : ComponentActivity() {
@@ -58,7 +62,6 @@ class MainActivity : ComponentActivity() {
             TMDBTheme(darkTheme = false) {
 
                 val navController = rememberNavController()
-
 
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -75,6 +78,7 @@ class MainActivity : ComponentActivity() {
                                 .fillMaxSize()
                                 .padding(bottom = paddingValues.calculateBottomPadding() - 12.dp)
                         ) {
+
                             BottomNavGraph(navController = navController)
                         }
                     }
@@ -82,6 +86,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
 }
 
 

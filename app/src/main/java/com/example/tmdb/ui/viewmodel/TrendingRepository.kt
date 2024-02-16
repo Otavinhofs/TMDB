@@ -33,5 +33,4 @@ class TrendingRepository {
         else listOf()
     }
 
-
 }

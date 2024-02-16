@@ -44,17 +44,23 @@ fun PersonScreen() {
 
     val uiState by viewModel.uiState.collectAsState()
 
-    LazyColumn(
-        Modifier
-            .background(color = Color.LightGray)
-            .padding(15.dp)
-            .fillMaxSize()
-    ) {
-        items(uiState.trendingPersons.orEmpty()) { persons ->
-            PersonCard(persons)
-            Spacer(modifier = Modifier.height(20.dp))
-        }
 
+        LazyColumn(
+            Modifier
+                .background(color = Color.LightGray)
+                .padding(15.dp)
+                .fillMaxSize()
+        ) {
+            items(uiState.trendingPersons.orEmpty()) { persons ->
+                PersonCard(persons)
+                Spacer(modifier = Modifier.height(20.dp))
+            }
+
+        }
+    if (uiState.loading) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
     }
 
 }
@@ -73,7 +79,6 @@ fun PersonCard(persons: Person) {
                     AsyncImage(
                         model = "https://image.tmdb.org/t/p/w400${persons.profilePath}",
                         contentDescription = null,
-
                     )
                 } else {
                     Icon(Icons.Rounded.Person, contentDescription = null, modifier = Modifier
