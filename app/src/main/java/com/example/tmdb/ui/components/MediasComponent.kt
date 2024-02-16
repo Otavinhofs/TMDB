@@ -22,6 +22,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -38,25 +39,24 @@ import com.example.tmdb.data.model.Medias
 import com.example.tmdb.ui.viewmodel.PopularMediasViewModel
 import java.text.SimpleDateFormat
 
+private val viewModel = PopularMediasViewModel()
 
 @Composable
 fun MediasScreen(mediaType: MediaType) {
-    val viewModel = PopularMediasViewModel()
-    if (mediaType == MediaType.MOVIE) {
-        viewModel.getPopularMovies()
-    }
-    else {
-        viewModel.getPopularSeries()
+    LaunchedEffect(Unit) {
+        if (mediaType == MediaType.MOVIE) {
+            viewModel.getPopularMovies()
+        } else {
+            viewModel.getPopularSeries()
+        }
     }
     val uiState by viewModel.uiState.collectAsState()
 
-//    if (uiState.loading) {
-//        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-//            CircularProgressIndicator()
-//        }
-//        print("__________loading True__________")
-//    } else {
-        print("++++++++++loading false________")
+    if (uiState.loading) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
+    } else {
         LazyColumn(
             Modifier
                 .background(color = Color.LightGray)
@@ -67,10 +67,8 @@ fun MediasScreen(mediaType: MediaType) {
                 MediasCard(medias)
             }
         }
-//    }
-
+    }
 }
-
 
 @Composable
 fun MediasCard(medias: Medias) {
