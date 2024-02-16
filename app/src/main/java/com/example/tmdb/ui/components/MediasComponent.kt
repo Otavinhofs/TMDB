@@ -33,16 +33,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.tmdb.Utils.MediaType
 import com.example.tmdb.data.model.Medias
 import com.example.tmdb.ui.viewmodel.PopularMediasViewModel
 import java.text.SimpleDateFormat
 
-private val viewModel = PopularMediasViewModel()
-
 @Composable
-fun MediasScreen(mediaType: MediaType) {
+fun MediasScreen(mediaType: MediaType, viewModel: PopularMediasViewModel = hiltViewModel()) {
     LaunchedEffect(Unit) {
         if (mediaType == MediaType.MOVIE) {
             viewModel.getPopularMovies()
