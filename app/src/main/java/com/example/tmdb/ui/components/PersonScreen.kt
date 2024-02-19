@@ -22,6 +22,7 @@ import androidx.compose.material.icons.rounded.Stars
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -32,19 +33,26 @@ import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.tmdb.data.model.Person
+import com.example.tmdb.ui.viewmodel.PopularMediasViewModel
 import com.example.tmdb.ui.viewmodel.PopularPersonViewModel
 
 @Composable
-fun PersonScreen() {
-    val viewModel = PopularPersonViewModel()
+fun PersonScreen(viewModel: PopularPersonViewModel = hiltViewModel()) {
 
-    viewModel.getPopularPerson()
+    LaunchedEffect(Unit){
+        viewModel.getPopularPerson()
 
+    }
     val uiState by viewModel.uiState.collectAsState()
 
-
+    if (uiState.loading) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
+    } else {
         LazyColumn(
             Modifier
                 .background(color = Color.LightGray)
@@ -56,10 +64,6 @@ fun PersonScreen() {
                 Spacer(modifier = Modifier.height(20.dp))
             }
 
-        }
-    if (uiState.loading) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
         }
     }
 
@@ -81,9 +85,11 @@ fun PersonCard(persons: Person) {
                         contentDescription = null,
                     )
                 } else {
-                    Icon(Icons.Rounded.Person, contentDescription = null, modifier = Modifier
-                        .width(110.dp)
-                        .height(150.dp))
+                    Icon(
+                        Icons.Rounded.Person, contentDescription = null, modifier = Modifier
+                            .width(110.dp)
+                            .height(150.dp)
+                    )
                 }
 
             }
