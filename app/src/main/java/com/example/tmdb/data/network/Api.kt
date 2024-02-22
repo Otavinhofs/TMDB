@@ -1,12 +1,11 @@
 package com.example.tmdb.data.network
 
-import com.example.tmdb.data.model.Medias
+import com.example.tmdb.data.model.Media
 import com.example.tmdb.data.model.Person
 import com.example.tmdb.data.network.wrapper.ApiResponseWrapper
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,16 +20,17 @@ interface Api {
     @GET("movie/day?language=pt-BR")
     suspend fun getMoviesList(
         @Header("Authorization") header: String
-    ) : Response<ApiResponseWrapper<List<Medias>>>
+    ) : Response<ApiResponseWrapper<List<Media>>>
 
     @GET("tv/day?language=pt-BR")
     suspend fun getSeriesList(
         @Header("Authorization") header: String
-    ) : Response<ApiResponseWrapper<List<Medias>>>
+    ) : Response<ApiResponseWrapper<List<Media>>>
     @GET("person/day?language=pt-BR")
     suspend fun getPersonList(
         @Header("Authorization") header: String
     ) : Response<ApiResponseWrapper<List<Person>>>
+
 }
 
 private const val TIMEOUT: Long = 60

@@ -1,4 +1,4 @@
-package com.example.tmdb.ui.components
+package com.example.tmdb.ui.components.navigationBottomBar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LiveTv

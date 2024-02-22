@@ -2,7 +2,7 @@ package com.example.tmdb.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tmdb.data.model.Medias
+import com.example.tmdb.data.model.Media
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -42,6 +42,6 @@ class PopularMediasViewModel @Inject constructor() : ViewModel() {
         val loading: Boolean = false,
         val error: String? = null,
         val isEmpty: Boolean = false,
-        val trendingMedias: List<Medias>? = null
+        val trendingMedias: List<Media>? = null
     )
 }

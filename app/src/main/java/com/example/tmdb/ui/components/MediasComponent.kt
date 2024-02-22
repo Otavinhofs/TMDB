@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -34,9 +35,9 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import com.example.tmdb.Utils.MediaType
-import com.example.tmdb.data.model.Medias
+import com.example.tmdb.data.model.Media
 import com.example.tmdb.ui.viewmodel.PopularMediasViewModel
 import java.text.SimpleDateFormat
 
@@ -70,11 +71,11 @@ fun MediasScreen(mediaType: MediaType, viewModel: PopularMediasViewModel = hiltV
 }
 
 @Composable
-fun MediasCard(medias: Medias) {
+fun MediasCard(media: Media) {
 
     Box(
         Modifier
-            .clip(RoundedCornerShape(25.dp))
+            .clip(RoundedCornerShape(8.dp))
             .background(color = Color.White)
             .fillMaxWidth()
     ) {
@@ -86,11 +87,25 @@ fun MediasCard(medias: Medias) {
         )
         {
             Row(modifier = Modifier.fillMaxWidth(), Arrangement.SpaceAround) {
-                AsyncImage(
-                    "https://image.tmdb.org/t/p/w400${medias.posterPath}",
-                    contentDescription = null
+                Box(
+                    Modifier
+                        .fillMaxHeight()
+                        .width(140.dp)
+                        .align(Alignment.CenterVertically),
+                    contentAlignment = Alignment.Center
+                ) {
+                    SubcomposeAsyncImage(
+                        "https://image.tmdb.org/t/p/w400${media.posterPath}",
+                        contentDescription = null,
+                        loading = {
 
-                )
+                            CircularProgressIndicator(
+                                color = Color.Black
+                            )
+                        }
+                    )
+                }
+
                 Column(
                     Modifier
                         .fillMaxWidth()
@@ -98,14 +113,14 @@ fun MediasCard(medias: Medias) {
                 ) {
 
                     TextInfos(
-                        text = if (medias.media_type == "movie") {
-                            medias.title
-                        } else medias.name,
+                        text = if (media.mediaType == "movie") {
+                            media.title
+                        } else media.name,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
                     )
 
-                    Spacer(modifier = Modifier.height(15.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -118,16 +133,16 @@ fun MediasCard(medias: Medias) {
                             tint = Color.Red
                         )
                         Spacer(modifier = Modifier.width(5.dp))
-                        TextInfos(text = (if (medias.media_type == "movie") {
-                            medias.release_date
-                        } else medias.first_air_date)?.let {
+                        TextInfos(text = (if (media.mediaType == "movie") {
+                            media.releaseDate
+                        } else media.firstAirDate)?.let {
                             SimpleDateFormat("dd/MM/yyyy")
                                 .format(it).toString()
                         })
                     }
 
                     Spacer(
-                        modifier = Modifier.height(5.dp)
+                        modifier = Modifier.height(10.dp)
                     )
 
                     Row(
@@ -142,12 +157,12 @@ fun MediasCard(medias: Medias) {
                         )
                         Spacer(modifier = Modifier.width(5.dp))
                         TextInfos(
-                            text = "%.2f".format(medias.vote_average)
+                            text = "%.2f".format(media.voteAverage)
                         )
                     }
 
                     Spacer(
-                        modifier = Modifier.height(5.dp)
+                        modifier = Modifier.height(10.dp)
                     )
 
                     Row(
@@ -163,7 +178,7 @@ fun MediasCard(medias: Medias) {
                         )
                         Spacer(modifier = Modifier.width(5.dp))
                         TextInfos(
-                            text = (medias.vote_count).toString(),
+                            text = (media.voteCount).toString(),
                             fontSize = 15.sp
                         )
                     }
@@ -183,7 +198,7 @@ fun MediasCard(medias: Medias) {
                     .fillMaxWidth()
                     .padding(15.dp)
             ) {
-                TextInfos(text = medias.overview)
+                TextInfos(text = media.overview)
             }
 
         }

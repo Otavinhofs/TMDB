@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
-import com.example.tmdb.ui.components.BottomBar
-import com.example.tmdb.ui.components.BottomNavGraph
+import com.example.tmdb.ui.components.navigationBottomBar.BottomBar
+import com.example.tmdb.ui.components.navigationBottomBar.BottomNavGraph
 import com.example.tmdb.ui.theme.TMDBTheme
 import dagger.hilt.android.AndroidEntryPoint
 
